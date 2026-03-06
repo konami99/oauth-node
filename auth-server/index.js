@@ -20,13 +20,8 @@ clients.set("demo-client", {
   redirectUris: ["http://localhost:4000/callback"],
 });
 
-const PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7e1+6+5+5+5+5
------END PRIVATE KEY-----`;
+const PRIVATE_KEY = fs.readFileSync("./private.pem", "utf8");
 
-const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu3tfuvufufufufufufuf
------END PUBLIC KEY-----`;
 
 const ISSUER = "http://localhost:3000";
 const KEY_ID = "auth-server-key-1";
