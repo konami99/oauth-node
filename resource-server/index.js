@@ -20,12 +20,12 @@ async function requireAuth(req, res, next) {
   const token = auth.slice("Bearer ".length);
 
   try {
-    const { payLoad } = await jwtVerify(token, JWKS, {
+    const { payload } = await jwtVerify(token, JWKS, {
         issuer: ISSUER,
         audience: AUDIENCE,
     });
 
-    req.user = payLoad;
+    req.user = payload;
     next();
   } catch (err) {
     return res.status(401).json({error: "invalid_token", message: err.message});

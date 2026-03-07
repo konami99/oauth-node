@@ -84,7 +84,7 @@ app.get("/callback", async (req, res) => {
     { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
   );
 
-  const { access_token, refresh_token } = tokenRes.data;
+  const { access_token, refresh_token, expires_in } = tokenRes.data;
 
   res.cookie("access_token", access_token, { httpOnly: true });
   res.cookie("refresh_token", refresh_token, { httpOnly: true });
@@ -93,8 +93,14 @@ app.get("/callback", async (req, res) => {
   res.clearCookie("code_verifier");
   res.clearCookie("oauth_state");
 
-  // Redirect to normal app route
-  res.redirect("/profile");
+  res.send(`
+    <h2>Access Token Received!</h2>
+    <p>Access token expires in ${expires_in} seconds.</p>
+    <p>You can now call the protected API.</p>
+    <a href="/profile">View Profile</a>
+    <br /><br />
+    <a href="/refresh">Refresh Access Token</a>
+  `);
 });
 
 app.get("/profile", async (req, res) => {

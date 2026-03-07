@@ -21,14 +21,14 @@ clients.set("demo-client", {
 });
 
 const PRIVATE_KEY = fs.readFileSync("./private.pem", "utf8");
-
+const PUBLIC_KEY = fs.readFileSync("./public.pem", "utf8");
 
 const ISSUER = "http://localhost:3000";
 const KEY_ID = "auth-server-key-1";
 
 
 function base64url(input) {
-    return input.toString("base64").replace(/\+/g, "-").replace(/\//g, "=").replace(/=+$/g, "");
+    return input.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
 function sha256Base64url(str) {
