@@ -176,6 +176,26 @@ app.post("/token", async (req, res) => {
 });
 
 /**
+ * OIDC Discovery endpoint:
+ * Provides metadata about the authorization server's configuration.
+ */
+app.get("/.well-known/openid-configuration", (req, res) => {
+  res.json({
+    issuer: ISSUER,
+    authorization_endpoint: `${ISSUER}/authorize`,
+    token_endpoint: `${ISSUER}/token`,
+    jwks_uri: `${ISSUER}/.well-known/jwks.json`,
+    response_types_supported: ["code"],
+    grant_types_supported: ["authorization_code", "refresh_token"],
+    subject_types_supported: ["public"],
+    id_token_signing_alg_values_supported: ["RS256"],
+    scopes_supported: ["openid", "profile", "email", "api.read"],
+    token_endpoint_auth_methods_supported: ["none"],
+    code_challenge_methods_supported: ["S256"]
+  });
+});
+
+/**
  * JWKS endpoint:
  * Resource servers fetch public keys here to validate JWT signatures.
  */
